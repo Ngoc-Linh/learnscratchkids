@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-brand-50/40 font-body text-lg text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-bold leading-tight;
+  }
+  :focus-visible {
+    @apply outline-none ring-4 ring-scratch-400/50;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-display text-lg font-bold transition duration-200 ease-out active:translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-brand-500 text-white shadow-pop hover:bg-brand-600;
+  }
+  .btn-secondary {
+    @apply btn bg-scratch-500 text-white shadow-pop hover:bg-scratch-600;
+  }
+  .btn-ghost {
+    @apply btn border-2 border-ink/15 bg-white text-ink hover:border-scratch-400 hover:text-scratch-700;
+  }
+  .btn-sm {
+    @apply rounded-xl px-4 py-2 text-base;
+  }
+  .card {
+    @apply rounded-3xl bg-white p-6 shadow-soft ring-1 ring-ink/5 transition duration-300 ease-out;
+  }
+  .input {
+    @apply w-full rounded-2xl border-2 border-ink/10 bg-white px-4 py-3 text-lg placeholder:text-ink/40 focus:border-scratch-400;
+  }
+  .label {
+    @apply mb-1 block font-display text-base font-bold;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-bold;
+  }
+  .section-title {
+    @apply text-3xl sm:text-4xl;
+  }
+  .alert-error {
+    @apply rounded-2xl bg-rose-50 px-4 py-3 text-base font-semibold text-rose-700 ring-1 ring-rose-200;
+  }
+  .alert-ok {
+    @apply rounded-2xl bg-emerald-50 px-4 py-3 text-base font-semibold text-emerald-700 ring-1 ring-emerald-200;
+  }
+}
+
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-enter-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-enter-right {
+  from {
+    opacity: 0;
+    transform: translate3d(18px, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.route-transition {
+  animation: route-enter 420ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.hero-copy-enter {
+  animation: hero-enter-left 650ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.hero-visual-enter {
+  animation: hero-enter-right 750ms 100ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.stagger-children > * {
+  animation: route-enter 480ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.stagger-children > :nth-child(2) { animation-delay: 60ms; }
+.stagger-children > :nth-child(3) { animation-delay: 120ms; }
+.stagger-children > :nth-child(4) { animation-delay: 180ms; }
+.stagger-children > :nth-child(5) { animation-delay: 240ms; }
+.stagger-children > :nth-child(6) { animation-delay: 300ms; }
+
+a,
+button,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px -16px rgba(30, 42, 74, 0.32);
+  }
+
+  .card img {
+    transition: transform 450ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+
+  .card:hover img {
+    transform: scale(1.025);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

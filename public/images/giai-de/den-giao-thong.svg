@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+  <rect width="1000" height="620" rx="28" fill="#171b29"/>
+  <rect width="1000" height="68" rx="28" fill="#252c3e"/>
+  <circle cx="34" cy="34" r="10" fill="#fa5b63"/><circle cx="66" cy="34" r="10" fill="#f3bd4f"/><circle cx="98" cy="34" r="10" fill="#59c16d"/>
+  <text x="140" y="43" fill="#fff" font-family="Arial,sans-serif" font-size="24" font-weight="700">ĐÈN GIAO THÔNG · CHU KỲ</text>
+  <g font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#fff">
+    <rect x="100" y="118" width="570" height="54" rx="17" fill="#e7a800"/><text x="128" y="153">khi bấm vào cờ xanh</text>
+    <rect x="100" y="184" width="570" height="54" rx="17" fill="#d88a13"/><text x="128" y="219">liên tục</text>
+    <rect x="132" y="250" width="538" height="54" rx="17" fill="#8655bd"/><text x="160" y="285">chuyển trang phục thành [Xanh]</text>
+    <rect x="132" y="316" width="538" height="54" rx="17" fill="#d88a13"/><text x="160" y="351">đợi 5 giây</text>
+    <rect x="132" y="382" width="538" height="54" rx="17" fill="#8655bd"/><text x="160" y="417">chuyển trang phục thành [Vàng]</text>
+    <rect x="132" y="448" width="538" height="54" rx="17" fill="#d88a13"/><text x="160" y="483">đợi 2 giây → Đỏ 5 giây</text>
+  </g>
+  <rect x="740" y="140" width="110" height="330" rx="30" fill="#30394c"/>
+  <circle cx="795" cy="205" r="36" fill="#ed5b5b"/><circle cx="795" cy="305" r="36" fill="#f2bc46"/><circle cx="795" cy="405" r="36" fill="#55bd73"/>
+  <text x="710" y="530" fill="#a9b5ca" font-family="Arial,sans-serif" font-size="18">Chu kỳ lặp: 5 + 2 + 5 = 12 giây</text>
+</svg>

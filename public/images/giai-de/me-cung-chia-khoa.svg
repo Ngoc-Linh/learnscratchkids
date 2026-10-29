@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+  <rect width="1000" height="620" rx="28" fill="#171b29"/>
+  <rect width="1000" height="68" rx="28" fill="#252c3e"/>
+  <circle cx="34" cy="34" r="10" fill="#fa5b63"/><circle cx="66" cy="34" r="10" fill="#f3bd4f"/><circle cx="98" cy="34" r="10" fill="#59c16d"/>
+  <text x="140" y="43" fill="#fff" font-family="Arial,sans-serif" font-size="24" font-weight="700">MÊ CUNG · KIỂM TRA VA CHẠM</text>
+  <g font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#fff">
+    <rect x="75" y="118" width="560" height="50" rx="16" fill="#e7a800"/><text x="100" y="150">khi bấm cờ xanh: đặt [Có chìa] = 0</text>
+    <rect x="75" y="180" width="560" height="50" rx="16" fill="#d88a13"/><text x="100" y="212">liên tục · kiểm tra phím điều khiển</text>
+    <rect x="105" y="242" width="530" height="50" rx="16" fill="#3986d7"/><text x="130" y="274">di chuyển một bước nhỏ</text>
+    <rect x="105" y="304" width="530" height="50" rx="16" fill="#d88a13"/><text x="130" y="336">nếu chạm màu tường thì hoàn tác</text>
+    <rect x="75" y="366" width="560" height="50" rx="16" fill="#d87914"/><text x="100" y="398">nếu chạm Chìa → đặt [Có chìa] = 1</text>
+    <rect x="75" y="428" width="560" height="50" rx="16" fill="#d88a13"/><text x="100" y="460">nếu chạm Cửa và Có chìa = 1</text>
+    <rect x="105" y="490" width="530" height="50" rx="16" fill="#e7a800"/><text x="130" y="522">gửi tin [Thắng]</text>
+  </g>
+  <g transform="translate(720 145)" fill="none" stroke="#63d39a" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 20h180v90H90v90h180v90H20z"/>
+  </g>
+  <circle cx="785" cy="220" r="15" fill="#f4c34d"/><path d="M870 450h70v-90h-70" fill="none" stroke="#e97878" stroke-width="18"/>
+  <text x="718" y="555" fill="#a9b5ca" font-family="Arial,sans-serif" font-size="18">Chỉ thắng sau khi có chìa khóa</text>
+</svg>

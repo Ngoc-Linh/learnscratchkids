@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.env
+.env.local
+.env*.local
+scratchkids.json
+public/uploads/guide/
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+.DS_Store

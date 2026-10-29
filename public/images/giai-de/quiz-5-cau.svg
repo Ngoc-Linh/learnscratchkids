@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+  <rect width="1000" height="620" rx="28" fill="#171b29"/>
+  <rect width="1000" height="68" rx="28" fill="#252c3e"/>
+  <circle cx="34" cy="34" r="10" fill="#fa5b63"/><circle cx="66" cy="34" r="10" fill="#f3bd4f"/><circle cx="98" cy="34" r="10" fill="#59c16d"/>
+  <text x="140" y="43" fill="#fff" font-family="Arial,sans-serif" font-size="24" font-weight="700">QUIZ 5 CÂU · TÍNH ĐIỂM</text>
+  <g font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#fff">
+    <rect x="80" y="118" width="590" height="54" rx="17" fill="#e7a800"/><text x="108" y="153">khi bấm cờ xanh → Điểm = 0</text>
+    <rect x="80" y="184" width="590" height="54" rx="17" fill="#d88a13"/><text x="108" y="219">lặp lại 5 lần</text>
+    <rect x="112" y="250" width="558" height="54" rx="17" fill="#8655bd"/><text x="140" y="285">hỏi [Câu hỏi] và đợi</text>
+    <rect x="112" y="316" width="558" height="54" rx="17" fill="#d88a13"/><text x="140" y="351">nếu [trả lời = đáp án] thì</text>
+    <rect x="145" y="382" width="525" height="54" rx="17" fill="#d87914"/><text x="173" y="417">thay đổi [Điểm] một lượng 2</text>
+    <rect x="80" y="448" width="590" height="54" rx="17" fill="#3986d7"/><text x="108" y="483">sau cùng hiển thị tổng điểm</text>
+  </g>
+  <rect x="740" y="145" width="180" height="330" rx="25" fill="#232b3e" stroke="#4a5874" stroke-width="2"/>
+  <text x="783" y="208" fill="#f3bd4f" font-family="Arial,sans-serif" font-size="23" font-weight="700">ĐIỂM</text>
+  <text x="780" y="300" fill="#fff" font-family="Arial,sans-serif" font-size="58" font-weight="700">8/10</text>
+  <text x="772" y="375" fill="#a9b5ca" font-family="Arial,sans-serif" font-size="18">4 câu đúng × 2</text>
+  <text x="772" y="407" fill="#a9b5ca" font-family="Arial,sans-serif" font-size="18">điểm mỗi câu</text>
+</svg>

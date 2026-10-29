@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+  <rect width="1000" height="620" rx="28" fill="#171b29"/>
+  <rect width="1000" height="68" rx="28" fill="#252c3e"/>
+  <circle cx="34" cy="34" r="10" fill="#fa5b63"/><circle cx="66" cy="34" r="10" fill="#f3bd4f"/><circle cx="98" cy="34" r="10" fill="#59c16d"/>
+  <text x="140" y="43" fill="#fff" font-family="Arial,sans-serif" font-size="24" font-weight="700">TÁO · VÒNG LẶP VÀ VA CHẠM</text>
+  <g font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#fff">
+    <rect x="70" y="112" width="560" height="50" rx="16" fill="#e7a800"/><text x="96" y="144">khi nhận [Bắt đầu]</text>
+    <rect x="70" y="174" width="560" height="50" rx="16" fill="#d88a13"/><text x="96" y="206">liên tục · tạo lượt táo mới</text>
+    <rect x="95" y="236" width="520" height="50" rx="16" fill="#3986d7"/><text x="121" y="268">đi tới x ngẫu nhiên, y 170</text>
+    <rect x="95" y="298" width="520" height="50" rx="16" fill="#d88a13"/><text x="121" y="330">lặp đến khi chạm giỏ hoặc đáy</text>
+    <rect x="120" y="360" width="475" height="50" rx="16" fill="#3986d7"/><text x="146" y="392">thay đổi y một lượng -5</text>
+    <rect x="95" y="422" width="520" height="50" rx="16" fill="#d88a13"/><text x="121" y="454">nếu chạm Giỏ thì cộng Điểm</text>
+    <rect x="95" y="484" width="520" height="50" rx="16" fill="#d87914"/><text x="121" y="516">nếu không thì trừ Mạng</text>
+  </g>
+  <rect x="680" y="130" width="250" height="380" rx="24" fill="#20283a" stroke="#45516b" stroke-width="2"/>
+  <text x="720" y="190" fill="#f3bd4f" font-family="Arial,sans-serif" font-size="28" font-weight="700">KẾT QUẢ</text>
+  <text x="720" y="260" fill="#fff" font-family="Arial,sans-serif" font-size="24">Điểm: +1 🍎</text>
+  <text x="720" y="315" fill="#fff" font-family="Arial,sans-serif" font-size="24">Mạng: -1 ❤️</text>
+  <text x="720" y="400" fill="#a9b5ca" font-family="Arial,sans-serif" font-size="18">Mỗi lượt chỉ được</text>
+  <text x="720" y="430" fill="#a9b5ca" font-family="Arial,sans-serif" font-size="18">tính đúng một lần.</text>
+</svg>
