@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
-import type { GuideArticle } from "@/lib/guide-seed";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +10,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = await db.guideArticle.findUnique<GuideArticle>({ where: { slug } });
+  const article = await db.guideArticle.findUnique({ where: { slug } });
   if (!article?.published) return { title: "Không tìm thấy bài hướng dẫn" };
   return {
     title: article.title,
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuideArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = await db.guideArticle.findUnique<GuideArticle>({ where: { slug } });
+  const article = await db.guideArticle.findUnique({ where: { slug } });
   if (!article?.published) notFound();
 
   const category = article.category === "EXAM" ? "Đề thi" : "Luyện tập";

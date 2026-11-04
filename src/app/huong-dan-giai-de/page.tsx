@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SolutionGuide from "@/components/SolutionGuide";
 import { db } from "@/lib/db";
-import type { GuideArticle } from "@/lib/guide-seed";
 
 export const metadata: Metadata = {
   title: "Hướng dẫn giải đề Scratch",
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function SolutionGuidePage() {
-  const articles = await db.guideArticle.findMany<GuideArticle>({
+  const articles = await db.guideArticle.findMany({
     where: { published: true },
     orderBy: { createdAt: "desc" },
   });

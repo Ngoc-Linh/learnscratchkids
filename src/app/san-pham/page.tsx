@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getUser } from "@/lib/auth";
 import { safe } from "@/lib/db";
 import { listProjects } from "@/lib/queries";
@@ -35,17 +34,7 @@ export default async function ShowroomPage() {
       )}
 
       <div className="mt-8">
-        {user ? (
-          <ShareProjectForm />
-        ) : (
-          <div className="card flex flex-wrap items-center justify-between gap-3">
-            <p className="text-lg">Đăng nhập để chia sẻ dự án, thả tim và bình luận.</p>
-            <div className="flex gap-2">
-              <Link href="/dang-nhap?next=/san-pham" className="btn-secondary btn-sm">Đăng nhập</Link>
-              <Link href="/dang-ky" className="btn-ghost btn-sm">Tạo tài khoản</Link>
-            </div>
-          </div>
-        )}
+        <ShareProjectForm userName={user?.name} />
       </div>
 
       {projects.length === 0 ? (

@@ -6,7 +6,6 @@ import { getCourse, LEARN_MODES } from "@/lib/courses";
 import { formatDate } from "@/lib/client";
 import { AccountManager, CreateAccountForm, EnrollmentStatus, ReviewForm } from "@/components/AdminPanel";
 import AdminGuideArticles from "@/components/AdminGuideArticles";
-import type { GuideArticle } from "@/lib/guide-seed";
 
 export const metadata: Metadata = { title: "Quản trị", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -28,19 +27,11 @@ export default async function AdminPage() {
       take: 30,
       include: { user: { select: { name: true, phone: true } } },
     }),
-    db.user.findMany<{
-      id: string;
-      name: string;
-      phone: string | null;
-      role: "USER" | "ADMIN";
-      isActive: boolean;
-      stars: number;
-      createdAt: Date;
-    }>({
+    db.user.findMany({
       orderBy: { createdAt: "desc" },
       select: { id: true, name: true, phone: true, role: true, isActive: true, stars: true, createdAt: true },
     }),
-    db.guideArticle.findMany<GuideArticle>({ orderBy: { updatedAt: "desc" } }),
+    db.guideArticle.findMany({ orderBy: { updatedAt: "desc" } }),
     db.enrollment.count(),
     db.enrollment.count({ where: { isTrial: true } }),
     db.enrollment.count({ where: { isTrial: true, status: "NEW" } }),

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { sendJson } from "@/lib/client";
 
-export default function ShareProjectForm() {
+export default function ShareProjectForm({ userName }: { userName?: string }) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [ok, setOk] = useState(false);
@@ -21,6 +21,7 @@ export default function ShareProjectForm() {
       title: f.get("title"),
       description: f.get("description") || undefined,
       scratchUrl: f.get("scratchUrl"),
+      authorName: userName ? undefined : f.get("authorName"),
     });
     setBusy(false);
     if (!res.ok) return setError(res.data?.error ?? "Có lỗi xảy ra");
@@ -32,6 +33,24 @@ export default function ShareProjectForm() {
   return (
     <form onSubmit={onSubmit} className="card space-y-4">
       <h2 className="text-2xl">Chia sẻ dự án của bạn</h2>
+      {userName ? (
+        <p className="text-base text-ink/70">
+          Dự án sẽ được đăng với tên <strong className="text-ink">{userName}</strong>.
+        </p>
+      ) : (
+        <div>
+          <label htmlFor="authorName" className="label">Tên hiển thị</label>
+          <input
+            id="authorName"
+            name="authorName"
+            className="input"
+            maxLength={60}
+            placeholder="Khách"
+            autoComplete="nickname"
+          />
+          <p className="mt-1 text-sm text-ink/60">Bạn có thể để trống để đăng với tên Khách.</p>
+        </div>
+      )}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="title" className="label">Tên dự án *</label>

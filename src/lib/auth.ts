@@ -55,7 +55,7 @@ export async function getUser(): Promise<SessionUser | null> {
     if (!token) return null;
     const { payload } = await jwtVerify(token, secretKey());
     if (!payload.sub) return null;
-    const user = await db.user.findUnique<SessionUser & { isActive: boolean }>({
+    const user = await db.user.findUnique({
       where: { id: payload.sub },
       select: { id: true, phone: true, name: true, role: true, stars: true, isActive: true },
     });

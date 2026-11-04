@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const fixed = ["", "/khoa-hoc", "/huong-dan-giai-de", "/san-pham", "/blog", "/dang-ky-hoc"].map((p) => ({ url: `${base}${p}` }));
   const courses = COURSES.map((c) => ({ url: `${base}/khoa-hoc/${c.slug}` }));
   const posts = POSTS.map((p) => ({ url: `${base}/blog/${p.slug}` }));
-  const guideArticles = await db.guideArticle.findMany<{ slug: string; updatedAt: Date }>({
+  const guideArticles = await db.guideArticle.findMany({
     where: { published: true },
     select: { slug: true, updatedAt: true },
   });
