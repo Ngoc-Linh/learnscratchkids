@@ -39,7 +39,7 @@ export default async function HomePage() {
               Bé học lập trình Scratch bằng cách tự tay làm ra những trò chơi của riêng mình, thay vì chỉ ngồi chơi game.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary rounded-full px-7 text-lg sm:text-xl">Đăng ký học thử 0đ <span aria-hidden="true">→</span></Link>
+              <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary rounded-full px-7 text-lg sm:text-xl">Đăng ký học thử <span aria-hidden="true">→</span></Link>
               <Link href="/khoa-hoc" className="btn-ghost rounded-full border-white/80 bg-white/80 text-lg shadow-soft sm:text-xl">Khám phá khóa học</Link>
             </div>
           </div>
@@ -156,10 +156,7 @@ export default async function HomePage() {
       {TESTIMONIALS.length > 0 && (
         <section className="container-page py-20 sm:py-24">
           <h2 className="section-title text-center">Cảm nhận từ phụ huynh & học viên</h2>
-          {TESTIMONIALS_ARE_SAMPLE && (
-            <p className="mt-2 text-center text-sm font-semibold text-brand-700">(Nội dung mẫu - cần thay bằng phản hồi thật trong src/lib/site.ts)</p>
-          )}
-
+          
           <div className="stagger-children mt-8 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((t) => (
               <figure key={t.text} className="card">

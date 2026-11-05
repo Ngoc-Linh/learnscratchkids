@@ -20,7 +20,7 @@ export default function CourseCard({ course }: { course: Course }) {
           Xem chi tiết
         </Link>
         <Link href={`/dang-ky-hoc?khoa=${course.slug}&hoc-thu=1`} className="btn-primary btn-sm">
-          Học thử 0đ
+          Học thử
         </Link>
       </div>
     </article>

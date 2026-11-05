@@ -32,7 +32,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 py-4 text-center text-sm text-white/50">
-        © {new Date().getFullYear()} {SITE.name}. Scratch là dự án của Scratch Foundation / MIT Media Lab; {SITE.name} không trực thuộc tổ chức này.
+        © {new Date().getFullYear()} {SITE.name}. Khơi nguồn tư duy - sáng tạo trò chơi
       </div>
     </footer>
   );

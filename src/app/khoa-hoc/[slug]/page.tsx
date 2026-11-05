@@ -38,7 +38,7 @@ export default async function CourseDetailPage({ params }: Props) {
             <h1 className="text-3xl sm:text-4xl">{course.title}</h1>
             <p className="mt-2 max-w-2xl text-lg text-ink/80">{course.summary}</p>
           </div>
-          <Link href={`/dang-ky-hoc?khoa=${course.slug}&hoc-thu=1`} className="btn-primary text-xl">Đăng ký học thử 0đ</Link>
+          <Link href={`/dang-ky-hoc?khoa=${course.slug}&hoc-thu=1`} className="btn-primary text-xl">Đăng ký học thử</Link>
         </div>
       </header>
 
@@ -74,7 +74,7 @@ export default async function CourseDetailPage({ params }: Props) {
                 <div>
                   <div className="text-5xl">▶️</div>
                   <p className="mt-2 text-base text-ink/70">
-                    Video học thử đang được cập nhật. Đăng ký học thử 0đ để bé trải nghiệm cùng giáo viên.
+                    Video học thử đang được cập nhật. Đăng ký học thử để bé trải nghiệm cùng giáo viên.
                   </p>
                 </div>
               </div>

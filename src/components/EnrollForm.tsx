@@ -102,7 +102,7 @@ export default function EnrollForm({ defaultCourse, defaultTrial = true, default
 
       <label className="flex cursor-pointer items-center gap-3 rounded-2xl bg-brand-50 p-4">
         <input type="checkbox" name="isTrial" defaultChecked={defaultTrial} className="h-5 w-5 accent-brand-500" />
-        <span className="font-display font-bold">Tôi muốn đăng ký học thử miễn phí (0đ)</span>
+        <span className="font-display font-bold">Tôi muốn đăng ký học thử miễn phí</span>
       </label>
 
       <div>

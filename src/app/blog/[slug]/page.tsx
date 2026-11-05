@@ -38,7 +38,7 @@ export default async function PostPage({ params }: Props) {
       </div>
       <div className="card mt-12 text-center">
         <h2 className="text-2xl">Muốn con thử học Scratch?</h2>
-        <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary mt-4">Đăng ký học thử 0đ</Link>
+        <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary mt-4">Đăng ký học thử</Link>
       </div>
     </article>
   );
