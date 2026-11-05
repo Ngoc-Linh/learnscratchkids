@@ -4,6 +4,7 @@ import { SITE } from "@/lib/site";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RouteTransition from "@/components/RouteTransition";
+import ScrollEffects from "@/components/ScrollEffects";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RouteTransition>{children}</RouteTransition>
         </main>
         <Footer />
+        <ScrollEffects />
       </body>
     </html>
   );

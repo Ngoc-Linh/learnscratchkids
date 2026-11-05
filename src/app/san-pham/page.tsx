@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getUser } from "@/lib/auth";
-import { safe } from "@/lib/db";
+import { isDatabaseConfigured, safe } from "@/lib/db";
 import { listProjects } from "@/lib/queries";
 import ProjectCard from "@/components/ProjectCard";
 import ShareProjectForm from "@/components/ShareProjectForm";
@@ -13,7 +13,9 @@ export const dynamic = "force-dynamic";
 
 export default async function ShowroomPage() {
   const user = await getUser();
-  const projects = await safe(() => listProjects({ userId: user?.id, take: 60 }), []);
+  const projects = isDatabaseConfigured()
+    ? await safe(() => listProjects({ userId: user?.id, take: 60 }), [])
+    : [];
 
   const top = [...projects].sort((a, b) => b.monthVotes - a.monthVotes)[0];
   const showChampion = top && top.monthVotes > 0;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getUser } from "@/lib/auth";
-import { safe } from "@/lib/db";
+import { isDatabaseConfigured, safe } from "@/lib/db";
 import { listProjects } from "@/lib/queries";
 import { COURSES } from "@/lib/courses";
 import {
@@ -18,30 +18,34 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const user = await getUser();
-  const projects = await safe(() => listProjects({ userId: user?.id, take: 6 }), []);
+  const projects = isDatabaseConfigured()
+    ? await safe(() => listProjects({ userId: user?.id, take: 6 }), [])
+    : [];
 
   return (
     <>
       {/* HERO */}
-      <section className="overflow-hidden bg-gradient-to-br from-brand-100 via-white to-scratch-100">
-        <div className="container-page grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20">
-          <div className="hero-copy-enter">
-            <span className="chip bg-white text-brand-700 shadow-pop">Dành cho bé 6-15 tuổi</span>
-            <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl">
+      <section className="home-hero relative isolate overflow-hidden bg-gradient-to-br from-[#fff5e9] via-white to-[#eaf4ff]">
+        <div className="hero-orb hero-orb-one" aria-hidden="true" />
+        <div className="hero-orb hero-orb-two" aria-hidden="true" />
+        <div className="container-page relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:gap-14 lg:py-24">
+          <div className="hero-copy-enter relative z-10">
+            <span className="chip rounded-full bg-white px-4 py-2 text-brand-700 shadow-soft ring-1 ring-brand-100">Dành cho bé 6-15 tuổi</span>
+            <h1 className="mt-5 max-w-2xl text-4xl sm:text-5xl lg:text-[4.25rem] lg:leading-[1.05]">
               {SITE.slogan.split(" - ")[0]} <span className="text-brand-500">-</span>{" "}
               <span className="text-scratch-500">{SITE.slogan.split(" - ")[1]}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-xl text-ink/80">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-ink/75 sm:text-xl">
               Bé học lập trình Scratch bằng cách tự tay làm ra những trò chơi của riêng mình, thay vì chỉ ngồi chơi game.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary text-xl">Đăng ký học thử 0đ</Link>
-              <Link href="/khoa-hoc" className="btn-ghost text-xl">Khám phá khóa học</Link>
+              <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary rounded-full px-7 text-lg sm:text-xl">Đăng ký học thử 0đ <span aria-hidden="true">→</span></Link>
+              <Link href="/khoa-hoc" className="btn-ghost rounded-full border-white/80 bg-white/80 text-lg shadow-soft sm:text-xl">Khám phá khóa học</Link>
             </div>
           </div>
 
           <div className="relative hero-visual-enter">
-            <div className="aspect-video overflow-hidden rounded-3xl bg-ink shadow-soft ring-4 ring-white">
+            <div className="hero-media-frame aspect-video overflow-hidden rounded-[2rem] bg-ink shadow-[0_28px_70px_-30px_rgba(30,42,74,0.5)] ring-8 ring-white">
               {SITE.heroVideoEmbed ? (
                 <iframe
                   src={SITE.heroVideoEmbed}
@@ -52,12 +56,12 @@ export default async function HomePage() {
                   loading="lazy"
                 />
               ) : (
-                <div className="grid h-full grid-cols-3 gap-3 bg-gradient-to-br from-scratch-500 to-scratch-700 p-6 text-center text-white">
+                <div className="grid h-full grid-cols-3 gap-3 bg-gradient-to-br from-scratch-400 via-scratch-500 to-scratch-700 p-4 text-center text-white sm:gap-4 sm:p-6">
                   {SAMPLE_SHOWCASE.slice(0, 6).map((s) => (
-                    <div key={s.title} className="grid place-items-center rounded-2xl bg-white/15">
+                    <div key={s.title} className="showcase-tile grid place-items-center rounded-2xl border border-white/20 bg-white/15 backdrop-blur-sm">
                       <div>
-                        <div className="text-4xl sm:text-5xl">{s.emoji}</div>
-                        <div className="mt-1 font-display text-sm font-bold sm:text-base">{s.title}</div>
+                        <div className="text-3xl sm:text-5xl">{s.emoji}</div>
+                        <div className="mt-1 font-display text-xs font-bold sm:text-base">{s.title}</div>
                       </div>
                     </div>
                   ))}
@@ -70,7 +74,7 @@ export default async function HomePage() {
       </section>
 
       {/* VALUE PROPS */}
-      <section className="container-page py-16">
+      <section className="container-page py-20 sm:py-24">
         <h2 className="section-title text-center">Con nhận được gì?</h2>
         <div className="stagger-children mt-10 grid gap-6 md:grid-cols-3">
           {VALUE_PROPS.map((v) => (
@@ -84,7 +88,7 @@ export default async function HomePage() {
       </section>
 
       {/* ROADMAP */}
-      <section className="bg-white py-16">
+      <section className="roadmap-section bg-white py-20 sm:py-24">
         <div className="container-page">
           <h2 className="section-title text-center">Lộ trình học tập</h2>
           <p className="mt-2 text-center text-ink/70">Từ những khối lệnh đầu tiên đến việc gõ lệnh thật</p>
@@ -109,7 +113,7 @@ export default async function HomePage() {
       </section>
 
       {/* COURSES */}
-      <section className="container-page py-16">
+      <section className="container-page py-20 sm:py-24">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h2 className="section-title">Các khóa học</h2>
           <Link href="/khoa-hoc" className="font-display font-bold text-scratch-600 hover:underline">Xem tất cả →</Link>
@@ -122,7 +126,7 @@ export default async function HomePage() {
       </section>
 
       {/* SHOWCASE */}
-      <section className="bg-scratch-50 py-16">
+      <section className="showcase-section bg-scratch-50 py-20 sm:py-24">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="section-title">Sản phẩm của học viên</h2>
@@ -150,11 +154,12 @@ export default async function HomePage() {
 
       {/* TESTIMONIALS */}
       {TESTIMONIALS.length > 0 && (
-        <section className="container-page py-16">
+        <section className="container-page py-20 sm:py-24">
           <h2 className="section-title text-center">Cảm nhận từ phụ huynh & học viên</h2>
           {TESTIMONIALS_ARE_SAMPLE && (
             <p className="mt-2 text-center text-sm font-semibold text-brand-700">(Nội dung mẫu - cần thay bằng phản hồi thật trong src/lib/site.ts)</p>
           )}
+
           <div className="stagger-children mt-8 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((t) => (
               <figure key={t.text} className="card">
@@ -172,7 +177,7 @@ export default async function HomePage() {
           <h2 className="text-3xl sm:text-4xl">Cho bé thử một buổi học miễn phí?</h2>
           <p className="mt-2 text-xl text-white/90">Đăng ký trong 1 phút, chúng tôi sẽ liên hệ phụ huynh.</p>
           <Link href="/dang-ky-hoc?hoc-thu=1" className="btn mt-6 bg-white text-brand-700 shadow-pop hover:bg-brand-50 text-xl">
-            Đăng ký học thử 0đ
+            Đăng ký học thử
           </Link>
         </div>
       </section>
