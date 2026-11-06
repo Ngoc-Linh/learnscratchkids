@@ -7,7 +7,7 @@ import { formatDate } from "@/lib/client";
 import SubmitForm from "@/components/SubmitForm";
 import RewardList from "@/components/RewardList";
 
-export const metadata: Metadata = { title: "Tài khoản của tôi" };
+export const metadata: Metadata = { title: "Tài khoản của tôi", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 export default async function AccountPage() {

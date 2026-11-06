@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
 import AuthForm from "@/components/AuthForm";
 
-export const metadata: Metadata = { title: "Đăng nhập" };
+export const metadata: Metadata = { title: "Đăng nhập", robots: { index: false, follow: true } };
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {

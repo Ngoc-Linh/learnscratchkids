@@ -18,7 +18,6 @@ export default function Footer() {
           <ul className="space-y-2 text-base text-white/80">
             <li><ActiveNavLink href="/khoa-hoc" className="rounded px-1" activeClassName="font-bold text-brand-400" inactiveClassName="hover:text-brand-400">Khóa học</ActiveNavLink></li>
             <li><ActiveNavLink href="/san-pham" className="rounded px-1" activeClassName="font-bold text-brand-400" inactiveClassName="hover:text-brand-400">Sản phẩm</ActiveNavLink></li>
-            <li><ActiveNavLink href="/blog" className="rounded px-1" activeClassName="font-bold text-brand-400" inactiveClassName="hover:text-brand-400">Góc phụ huynh</ActiveNavLink></li>
             <li><Link href="/dang-ky-hoc?hoc-thu=1" className="hover:text-brand-400">Đăng ký học thử</Link></li>
           </ul>
         </div>

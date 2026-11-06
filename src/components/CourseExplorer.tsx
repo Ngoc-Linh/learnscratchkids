@@ -20,10 +20,10 @@ export default function CourseExplorer({ courses }: { courses: Course[] }) {
     <div>
       <div className="card mb-8 grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
         <div>
-          <label htmlFor="age" className="label">Bé nhà bạn mấy tuổi?</label>
+          <label htmlFor="age" className="label">Độ tuổi phù hợp</label>
           <select id="age" className="input" value={age} onChange={(e) => setAge(e.target.value)}>
             <option value="">Tất cả độ tuổi</option>
-            {Array.from({ length: 10 }, (_, i) => i + 6).map((a) => (
+            {Array.from({ length: 11 }, (_, i) => i + 6).map((a) => (
               <option key={a} value={a}>{a} tuổi</option>
             ))}
           </select>

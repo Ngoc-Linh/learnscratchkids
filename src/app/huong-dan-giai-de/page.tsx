@@ -6,6 +6,7 @@ import { listPublishedGuideArticles } from "@/lib/guide-articles";
 export const metadata: Metadata = {
   title: "Hướng dẫn giải đề Scratch",
   description: "Bài giải Scratch mẫu hoàn chỉnh: đề bài, sơ đồ khối lệnh, thuật toán, giả mã và tình huống kiểm thử.",
+  alternates: { canonical: "/huong-dan-giai-de" },
 };
 export const dynamic = "force-dynamic";
 

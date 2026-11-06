@@ -8,13 +8,26 @@ import ScrollEffects from "@/components/ScrollEffects";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: `${SITE.name} - ${SITE.slogan}`, template: `%s | ${SITE.name}` },
+  title: {
+    default: "Học lập trình Scratch cho trẻ em 6-15 tuổi",
+    template: `%s | ${SITE.name}`,
+  },
   description: SITE.description,
+  applicationName: SITE.name,
   openGraph: {
-    title: `${SITE.name} - ${SITE.slogan}`,
+    title: "Học lập trình Scratch cho trẻ em 6-15 tuổi | ScratchKids",
     description: SITE.description,
+    siteName: SITE.name,
+    url: SITE.url,
     locale: "vi_VN",
     type: "website",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "ScratchKids - Học lập trình Scratch cho trẻ em" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Học lập trình Scratch cho trẻ em 6-15 tuổi | ScratchKids",
+    description: SITE.description,
+    images: ["/opengraph-image"],
   },
 };
 
@@ -36,6 +49,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="flex min-h-screen flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "EducationalOrganization",
+                  "@id": `${SITE.url}/#organization`,
+                  name: SITE.name,
+                  url: SITE.url,
+                  description: SITE.description,
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${SITE.url}/#website`,
+                  name: SITE.name,
+                  url: SITE.url,
+                  inLanguage: "vi-VN",
+                  publisher: { "@id": `${SITE.url}/#organization` },
+                },
+              ],
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
         <Header />
         <main className="flex-1">
           <RouteTransition>{children}</RouteTransition>

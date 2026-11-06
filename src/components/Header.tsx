@@ -8,7 +8,6 @@ const NAV = [
   { href: "/khoa-hoc", label: "Khóa học" },
   { href: "/huong-dan-giai-de", label: "Hướng dẫn giải đề" },
   { href: "/san-pham", label: "Sản phẩm" },
-  { href: "/blog", label: "Góc phụ huynh" },
 ];
 
 export function Logo() {

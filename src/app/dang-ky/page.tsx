@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
 import AuthForm from "@/components/AuthForm";
 
-export const metadata: Metadata = { title: "Tạo tài khoản" };
+export const metadata: Metadata = { title: "Tạo tài khoản", robots: { index: false, follow: true } };
 export const dynamic = "force-dynamic";
 
 export default async function RegisterPage() {

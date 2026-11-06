@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublishedGuideArticle } from "@/lib/guide-articles";
+import { SITE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: article.title,
     description: article.summary,
+    alternates: { canonical: `/huong-dan-giai-de/${article.slug}` },
+    openGraph: {
+      type: "article",
+      title: article.title,
+      description: article.summary,
+      images: article.imageUrl ? [article.imageUrl] : undefined,
+      publishedTime: article.createdAt.toISOString(),
+      modifiedTime: article.updatedAt.toISOString(),
+    },
   };
 }
 
@@ -26,6 +36,39 @@ export default async function GuideArticlePage({ params }: Props) {
   const category = article.category === "EXAM" ? "Đề thi" : "Luyện tập";
   return (
     <article className="container-page py-10 sm:py-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Article",
+                headline: article.title,
+                description: article.summary,
+                image: article.imageUrl
+                  ? article.imageUrl.startsWith("http")
+                    ? article.imageUrl
+                    : `${SITE.url}${article.imageUrl}`
+                  : undefined,
+                datePublished: article.createdAt.toISOString(),
+                dateModified: article.updatedAt.toISOString(),
+                inLanguage: "vi-VN",
+                mainEntityOfPage: `${SITE.url}/huong-dan-giai-de/${article.slug}`,
+                publisher: { "@id": `${SITE.url}/#organization` },
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Trang chủ", item: SITE.url },
+                  { "@type": "ListItem", position: 2, name: "Hướng dẫn giải đề Scratch", item: `${SITE.url}/huong-dan-giai-de` },
+                  { "@type": "ListItem", position: 3, name: article.title, item: `${SITE.url}/huong-dan-giai-de/${article.slug}` },
+                ],
+              },
+            ],
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <Link href="/huong-dan-giai-de" className="font-display font-bold text-scratch-700 hover:underline">
         ← Tất cả bài hướng dẫn
       </Link>

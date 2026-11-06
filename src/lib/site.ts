@@ -1,9 +1,21 @@
+const DEFAULT_SITE_URL = "https://www.learningscratchkids.com";
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const parsedSiteUrl = configuredSiteUrl ? new URL(configuredSiteUrl) : null;
+const isLocalSiteUrl =
+  parsedSiteUrl?.hostname === "localhost" ||
+  parsedSiteUrl?.hostname === "127.0.0.1" ||
+  parsedSiteUrl?.hostname === "0.0.0.0" ||
+  parsedSiteUrl?.hostname.endsWith(".localhost");
+
 export const SITE = {
   name: "ScratchKids",
   slogan: "Sáng tạo trò chơi - Khơi nguồn tư duy",
   description:
     "ScratchKids dạy lập trình Scratch cho trẻ 6-15 tuổi: tự tạo game, phát triển tư duy logic và sáng tạo. Học video hoặc online kèm 1-1.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url:
+    process.env.NODE_ENV === "production" && isLocalSiteUrl
+      ? DEFAULT_SITE_URL
+      : parsedSiteUrl?.origin ?? DEFAULT_SITE_URL,
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
   zalo: process.env.NEXT_PUBLIC_ZALO ?? "",
   heroVideoEmbed: process.env.NEXT_PUBLIC_HERO_VIDEO_EMBED ?? "",
@@ -28,10 +40,10 @@ export const VALUE_PROPS = [
 ];
 
 export const ROADMAP = [
-  { step: 1, title: "Mầm Chồi", age: "6-8 tuổi", emoji: "🌱" },
-  { step: 2, title: "Sáng Tạo - Cơ Bản", age: "8-11 tuổi", emoji: "🎨" },
-  { step: 3, title: "Game Master", age: "10-15 tuổi", emoji: "🎮" },
-  { step: 4, title: "Sang Python", age: "Gõ lệnh thật", emoji: "🐍" },
+  { step: 1, title: "Scratch Cơ bản", age: "Beginner", emoji: "🎨" },
+  { step: 2, title: "Scratch nâng cao", age: "Advanced", emoji: "🎮" },
+  { step: 3, title: "Luyện thi Tin học trẻ", age: "Scratch", emoji: "🏅" },
+  { step: 4, title: "Lập trình Python", age: "Viết mã lệnh", emoji: "🐍" },
 ];
 
 // NỘI DUNG MẪU - hãy thay bằng phản hồi thật của phụ huynh/học viên trước khi chạy chính thức.

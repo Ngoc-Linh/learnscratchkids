@@ -8,6 +8,7 @@ import ShareProjectForm from "@/components/ShareProjectForm";
 export const metadata: Metadata = {
   title: "Sản phẩm",
   description: "Showroom game và dự án Scratch do học viên ScratchKids tự thiết kế. Thả tim, bình luận và bình chọn Game của tháng.",
+  alternates: { canonical: "/san-pham" },
 };
 export const dynamic = "force-dynamic";
 

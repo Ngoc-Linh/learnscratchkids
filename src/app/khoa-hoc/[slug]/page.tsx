@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { COURSES, COURSE_COLORS, STARS_PER_LESSON, getCourse } from "@/lib/courses";
+import { COURSES, LEGACY_COURSES, COURSE_COLORS, STARS_PER_LESSON, getCourse } from "@/lib/courses";
+import { SITE } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return COURSES.map((c) => ({ slug: c.slug }));
+  return [...COURSES, ...LEGACY_COURSES].map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const course = getCourse(slug);
   if (!course) return {};
-  return { title: course.title, description: course.summary };
+  return {
+    title: course.title,
+    description: course.summary,
+    alternates: { canonical: `/khoa-hoc/${course.slug}` },
+    openGraph: { type: "article", title: course.title, description: course.summary },
+  };
 }
 
 export default async function CourseDetailPage({ params }: Props) {
@@ -21,9 +27,41 @@ export default async function CourseDetailPage({ params }: Props) {
   const course = getCourse(slug);
   if (!course) notFound();
   const c = COURSE_COLORS[course.color];
+  const isCurrentCourse = COURSES.some((item) => item.slug === course.slug);
 
   return (
     <div className="container-page py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Course",
+                name: course.title,
+                description: course.summary,
+                url: `${SITE.url}/khoa-hoc/${course.slug}`,
+                inLanguage: "vi-VN",
+                educationalLevel: course.level,
+                audience: {
+                  "@type": "EducationalAudience",
+                  educationalRole: "student",
+                },
+                provider: { "@id": `${SITE.url}/#organization` },
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Trang chủ", item: SITE.url },
+                  { "@type": "ListItem", position: 2, name: "Khóa học", item: `${SITE.url}/khoa-hoc` },
+                  { "@type": "ListItem", position: 3, name: course.title, item: `${SITE.url}/khoa-hoc/${course.slug}` },
+                ],
+              },
+            ],
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <Link href="/khoa-hoc" className="font-display font-bold text-scratch-600 hover:underline">← Tất cả khóa học</Link>
 
       <header className={`mt-4 rounded-[2rem] p-8 ${c.bg}`}>
@@ -38,12 +76,20 @@ export default async function CourseDetailPage({ params }: Props) {
             <h1 className="text-3xl sm:text-4xl">{course.title}</h1>
             <p className="mt-2 max-w-2xl text-lg text-ink/80">{course.summary}</p>
           </div>
-          <Link href={`/dang-ky-hoc?khoa=${course.slug}&hoc-thu=1`} className="btn-primary text-xl">Đăng ký học thử</Link>
+          {isCurrentCourse && (
+            <Link href={`/dang-ky-hoc?khoa=${course.slug}&hoc-thu=1`} className="btn-primary text-xl">Đăng ký học thử</Link>
+          )}
         </div>
       </header>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-1">
+          <section className="card">
+            <h2 className="text-2xl">Khóa học dành cho</h2>
+            <p className="mt-3 text-base leading-relaxed text-ink/70">{course.audience}</p>
+            <h3 className="mt-5 text-lg">Kiến thức đầu vào</h3>
+            <p className="mt-2 text-base leading-relaxed text-ink/70">{course.prerequisites}</p>
+          </section>
           <section className="card">
             <h2 className="text-2xl">Mục tiêu</h2>
             <ul className="mt-3 space-y-2 text-base">

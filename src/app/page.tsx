@@ -3,6 +3,7 @@ import { getUser } from "@/lib/auth";
 import { isDatabaseConfigured, safe } from "@/lib/db";
 import { listProjects } from "@/lib/queries";
 import { COURSES } from "@/lib/courses";
+import type { Metadata } from "next";
 import {
   ROADMAP,
   SAMPLE_SHOWCASE,
@@ -15,6 +16,12 @@ import CourseCard from "@/components/CourseCard";
 import ProjectCard from "@/components/ProjectCard";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Học lập trình Scratch cho trẻ em 6-15 tuổi",
+  description:
+    "Khóa học Scratch và Python cho trẻ 6-15 tuổi: học từ cơ bản, nâng cao đến luyện thi Tin học trẻ. Bé tự tạo game qua từng dự án thực hành.",
+  alternates: { canonical: "/" },
+};
 
 export default async function HomePage() {
   const user = await getUser();
@@ -24,6 +31,20 @@ export default async function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Học lập trình Scratch cho trẻ em 6-15 tuổi",
+            description: SITE.description,
+            url: SITE.url,
+            inLanguage: "vi-VN",
+            isPartOf: { "@id": `${SITE.url}/#website` },
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       {/* HERO */}
       <section className="home-hero relative isolate overflow-hidden bg-gradient-to-br from-[#fff5e9] via-white to-[#eaf4ff]">
         <div className="hero-orb hero-orb-one" aria-hidden="true" />
@@ -32,11 +53,11 @@ export default async function HomePage() {
           <div className="hero-copy-enter relative z-10">
             <span className="chip rounded-full bg-white px-4 py-2 text-brand-700 shadow-soft ring-1 ring-brand-100">Dành cho bé 6-15 tuổi</span>
             <h1 className="mt-5 max-w-2xl text-4xl sm:text-5xl lg:text-[4.25rem] lg:leading-[1.05]">
-              {SITE.slogan.split(" - ")[0]} <span className="text-brand-500">-</span>{" "}
-              <span className="text-scratch-500">{SITE.slogan.split(" - ")[1]}</span>
+              Học lập trình <span className="text-brand-500">Scratch</span>{" "}
+              <span className="text-scratch-500">cho trẻ em</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-ink/75 sm:text-xl">
-              Bé học lập trình Scratch bằng cách tự tay làm ra những trò chơi của riêng mình, thay vì chỉ ngồi chơi game.
+              {SITE.slogan}. Bé học lập trình bằng cách tự tay làm ra những trò chơi của riêng mình, thay vì chỉ ngồi chơi game.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary rounded-full px-7 text-lg sm:text-xl">Đăng ký học thử <span aria-hidden="true">→</span></Link>
@@ -90,10 +111,10 @@ export default async function HomePage() {
       {/* ROADMAP */}
       <section className="roadmap-section bg-white py-20 sm:py-24">
         <div className="container-page">
-          <h2 className="section-title text-center">Lộ trình học tập</h2>
-          <p className="mt-2 text-center text-ink/70">Từ những khối lệnh đầu tiên đến việc gõ lệnh thật</p>
+          <h2 className="section-title text-center">4 hướng học theo mục tiêu</h2>
+          <p className="mt-2 text-center text-ink/70">Chọn khóa học phù hợp với độ tuổi và kiến thức hiện tại của bé.</p>
           <ol className="stagger-children mt-10 grid gap-4 md:grid-cols-4">
-            {ROADMAP.map((r, i) => (
+            {ROADMAP.map((r) => (
               <li key={r.step} className="relative rounded-3xl bg-brand-50 p-6 text-center ring-2 ring-brand-100">
                 <span className="absolute -top-4 left-1/2 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full bg-brand-500 font-display font-bold text-white">
                   {r.step}
@@ -101,11 +122,6 @@ export default async function HomePage() {
                 <div className="mt-2 text-5xl">{r.emoji}</div>
                 <h3 className="mt-2 text-xl">{r.title}</h3>
                 <p className="text-base text-ink/70">{r.age}</p>
-                {i < ROADMAP.length - 1 && (
-                  <span aria-hidden className="absolute -right-4 top-1/2 hidden -translate-y-1/2 text-3xl text-brand-400 md:block">
-                    ›
-                  </span>
-                )}
               </li>
             ))}
           </ol>
@@ -118,7 +134,7 @@ export default async function HomePage() {
           <h2 className="section-title">Các khóa học</h2>
           <Link href="/khoa-hoc" className="font-display font-bold text-scratch-600 hover:underline">Xem tất cả →</Link>
         </div>
-        <div className="stagger-children mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="stagger-children mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
           {COURSES.map((c) => (
             <CourseCard key={c.slug} course={c} />
           ))}

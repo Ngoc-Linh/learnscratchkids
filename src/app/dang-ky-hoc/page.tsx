@@ -6,6 +6,7 @@ import EnrollForm from "@/components/EnrollForm";
 export const metadata: Metadata = {
   title: "Đăng ký khóa học",
   description: "Đăng ký học thử miễn phí hoặc đăng ký khóa học Scratch cho bé.",
+  robots: { index: false, follow: true },
 };
 export const dynamic = "force-dynamic";
 
