@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   applicationName: SITE.name,
+  verification: { google: "lF1crMVnIiiy68SLqbzefbM0mKu7HK54YcVfTSstHkg" },
   openGraph: {
     title: "Học lập trình Scratch cho trẻ em 6-15 tuổi | ScratchKids",
     description: SITE.description,
