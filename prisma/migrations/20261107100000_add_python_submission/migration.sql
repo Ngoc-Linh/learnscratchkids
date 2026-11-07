@@ -1,0 +1,2 @@
+ALTER TABLE "Submission" ALTER COLUMN "link" DROP NOT NULL;
+ALTER TABLE "Submission" ADD COLUMN "pythonCode" TEXT;

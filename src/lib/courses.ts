@@ -228,3 +228,8 @@ export const COURSE_COLORS: Record<CourseColor, { bg: string; text: string; ring
 };
 
 export const STARS_PER_LESSON = 10;
+
+export const PYTHON_COURSE_SLUG = "python-thuc-hanh";
+export const PYTHON_ENROLLMENT_COURSE_SLUG = "chuyen-tiep-scratch-sang-python";
+export const PYTHON_LESSON_NO = 1;
+export const PYTHON_LESSON_TITLE = "Bài thực hành Python";

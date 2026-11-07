@@ -3,16 +3,17 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { sendJson } from "@/lib/client";
-import { COURSES, STARS_PER_LESSON } from "@/lib/courses";
+import type { Course } from "@/lib/courses";
+import { STARS_PER_LESSON } from "@/lib/courses";
 
-export default function SubmitForm() {
+export default function SubmitForm({ courses }: { courses: Course[] }) {
   const router = useRouter();
-  const [slug, setSlug] = useState(COURSES[0].slug);
+  const [slug, setSlug] = useState(courses[0].slug);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
   const [busy, setBusy] = useState(false);
 
-  const course = COURSES.find((c) => c.slug === slug) ?? COURSES[0];
+  const course = courses.find((c) => c.slug === slug) ?? courses[0];
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,7 +45,7 @@ export default function SubmitForm() {
         <div>
           <label htmlFor="course" className="label">Khóa học</label>
           <select id="course" className="input" value={slug} onChange={(e) => setSlug(e.target.value)}>
-            {COURSES.map((c) => (
+            {courses.map((c) => (
               <option key={c.slug} value={c.slug}>{c.title}</option>
             ))}
           </select>

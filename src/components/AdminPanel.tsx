@@ -35,7 +35,17 @@ export function EnrollmentStatus({ id, status }: { id: string; status: string })
   );
 }
 
-export function ReviewForm({ id, feedback, bonusStars }: { id: string; feedback: string; bonusStars: number }) {
+export function ReviewForm({
+  id,
+  feedback,
+  bonusStars,
+  canAwardBonus = true,
+}: {
+  id: string;
+  feedback: string;
+  bonusStars: number;
+  canAwardBonus?: boolean;
+}) {
   const router = useRouter();
   const [text, setText] = useState(feedback);
   const [bonus, setBonus] = useState(bonusStars);
@@ -62,17 +72,19 @@ export function ReviewForm({ id, feedback, bonusStars }: { id: string; feedback:
         className="input !py-1.5 !text-base min-w-[12rem] flex-1"
         aria-label="Nhận xét"
       />
-      <label className="flex items-center gap-1 text-sm font-bold">
-        +⭐
-        <input
-          type="number"
-          min={0}
-          max={20}
-          value={bonus}
-          onChange={(e) => setBonus(Number(e.target.value))}
-          className="input !w-20 !py-1.5 !text-base"
-        />
-      </label>
+      {canAwardBonus && (
+        <label className="flex items-center gap-1 text-sm font-bold">
+          +⭐
+          <input
+            type="number"
+            min={0}
+            max={20}
+            value={bonus}
+            onChange={(e) => setBonus(Number(e.target.value))}
+            className="input !w-20 !py-1.5 !text-base"
+          />
+        </label>
+      )}
       <button type="submit" disabled={busy} className="btn-secondary btn-sm">Lưu</button>
       {msg && <span className="text-sm font-semibold">{msg}</span>}
     </form>

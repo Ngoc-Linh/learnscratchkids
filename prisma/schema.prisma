@@ -115,15 +115,17 @@ model Submission {
   id         String    @id @default(uuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  userId     String
+  userId     String?
   courseSlug String
   lessonNo   Int
-  link       String
+  authorName String?
+  link       String?
+  pythonCode String?   @db.Text
   note       String?
   feedback   String?
   bonusStars Int       @default(0)
   reviewedAt DateTime?
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@unique([userId, courseSlug, lessonNo])
   @@index([createdAt])

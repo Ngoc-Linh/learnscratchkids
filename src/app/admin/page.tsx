@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { getCourse, LEARN_MODES } from "@/lib/courses";
+import {
+  getCourse,
+  LEARN_MODES,
+  PYTHON_COURSE_SLUG,
+  PYTHON_LESSON_TITLE,
+} from "@/lib/courses";
 import { formatDate } from "@/lib/client";
 import { AccountManager, CreateAccountForm, EnrollmentStatus, ReviewForm } from "@/components/AdminPanel";
 import AdminGuideArticles from "@/components/AdminGuideArticles";
@@ -199,16 +204,23 @@ export default async function AdminPage() {
           {submissions.map((s) => {
             const course = getCourse(s.courseSlug);
             const lesson = course?.lessons.find((l) => l.no === s.lessonNo);
+            const isPythonSubmission = s.courseSlug === PYTHON_COURSE_SLUG;
             return (
               <div key={s.id} className="card !p-4">
                 <p className="font-display font-bold">
-                  {s.user.name} <span className="font-normal text-ink/60">({s.user.phone ?? "Chưa có số điện thoại"})</span> · {course?.title} - Bài {s.lessonNo}: {lesson?.title}
+                  {s.authorName ?? s.user?.name ?? "Khách"} <span className="font-normal text-ink/60">({s.user?.phone ?? "Khách"})</span> · {isPythonSubmission ? PYTHON_LESSON_TITLE : `${course?.title ?? s.courseSlug} - Bài ${s.lessonNo}: ${lesson?.title ?? ""}`}
                   {!s.reviewedAt && <span className="chip ml-2 bg-brand-100 text-brand-700">Chờ nhận xét</span>}
                 </p>
-                <a href={s.link} target="_blank" rel="noopener noreferrer" className="break-all text-sm text-scratch-700 underline">{s.link}</a>
+                {s.link && <a href={s.link} target="_blank" rel="noopener noreferrer" className="break-all text-sm text-scratch-700 underline">{s.link}</a>}
+                {s.pythonCode && (
+                  <details className="mt-2">
+                    <summary className="cursor-pointer text-sm font-bold text-scratch-700">Xem mã Python</summary>
+                    <pre className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-xl bg-slate-950 p-3 text-xs text-emerald-100">{s.pythonCode}</pre>
+                  </details>
+                )}
                 {s.note && <p className="text-sm text-ink/70">Ghi chú của bé: {s.note}</p>}
                 <div className="mt-2">
-                  <ReviewForm id={s.id} feedback={s.feedback ?? ""} bonusStars={s.bonusStars} />
+                  <ReviewForm id={s.id} feedback={s.feedback ?? ""} bonusStars={s.bonusStars} canAwardBonus={!!s.userId} />
                 </div>
               </div>
             );

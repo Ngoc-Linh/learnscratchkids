@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   applicationName: SITE.name,
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+  },
   verification: { google: "lF1crMVnIiiy68SLqbzefbM0mKu7HK54YcVfTSstHkg" },
   openGraph: {
     title: "Học lập trình Scratch cho trẻ em 6-15 tuổi | ScratchKids",

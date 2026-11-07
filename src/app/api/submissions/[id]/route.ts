@@ -21,7 +21,7 @@ export const PATCH = handler(async (req, ctx: { params: Promise<{ id: string }> 
       where: { id },
       data: { feedback: body.feedback || null, bonusStars: body.bonusStars, reviewedAt: new Date() },
     });
-    if (delta !== 0) {
+    if (delta !== 0 && sub.userId) {
       await tx.user.update({ where: { id: sub.userId }, data: { stars: { increment: delta } } });
     }
   });

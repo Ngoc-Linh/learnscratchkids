@@ -16,7 +16,10 @@ export const GET = handler(async (req) => {
 
   const since = new Date(Date.now() - 7 * 24 * 3600 * 1000);
   const subs = await db.submission.findMany({
-    where: { OR: [{ createdAt: { gte: since } }, { reviewedAt: { gte: since } }] },
+    where: {
+      userId: { not: null },
+      OR: [{ createdAt: { gte: since } }, { reviewedAt: { gte: since } }],
+    },
     include: {
       user: {
         select: {
@@ -37,11 +40,14 @@ export const GET = handler(async (req) => {
   });
 
   const byUser = new Map<string, typeof subs>();
-  for (const s of subs) byUser.set(s.userId, [...(byUser.get(s.userId) ?? []), s]);
+  for (const s of subs) {
+    if (s.userId) byUser.set(s.userId, [...(byUser.get(s.userId) ?? []), s]);
+  }
 
   let sent = 0;
   for (const [, list] of byUser) {
     const u = list[0].user;
+    if (!u) continue;
     const recipient = u.email ?? u.enrollments[0]?.email;
     if (!recipient) {
       console.warn(`[cron] bỏ qua báo cáo của ${u.id}: chưa có email phụ huynh`);
