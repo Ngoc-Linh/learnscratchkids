@@ -37,14 +37,9 @@ export default async function Header() {
       <LogoutButton />
     </>
   ) : (
-    <>
-      <ActiveNavLink href="/dang-nhap" className="rounded-lg px-2 py-1 font-display font-bold">
-        Đăng nhập
-      </ActiveNavLink>
-      <ActiveNavLink href="/dang-ky" className="rounded-lg px-2 py-1 font-display font-bold">
-        Tạo tài khoản
-      </ActiveNavLink>
-    </>
+    <Link href="/dang-nhap" className="btn-ghost btn-sm whitespace-nowrap rounded-full">
+      Đăng nhập
+    </Link>
   );
 
   return (
@@ -58,7 +53,7 @@ export default async function Header() {
         <nav className="hidden min-w-0 items-center gap-1 xl:flex 2xl:gap-2">
           <div className="flex min-w-0 items-center gap-1">
             {NAV.map((n) => (
-              <ActiveNavLink key={n.href} href={n.href} className="whitespace-nowrap rounded-full px-3 py-2 font-display text-sm font-bold 2xl:px-4 2xl:text-base">
+              <ActiveNavLink key={n.href} href={n.href} className="whitespace-nowrap rounded-full px-3 py-2 font-display text-base font-bold 2xl:px-4 2xl:text-lg">
                 {n.label}
               </ActiveNavLink>
             ))}
@@ -67,17 +62,17 @@ export default async function Header() {
           <div className="flex shrink-0 items-center gap-2 whitespace-nowrap">
             {account}
           </div>
-          <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary btn-sm ml-1 shrink-0 whitespace-nowrap rounded-full px-4 text-sm 2xl:text-base">
+          <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary btn-sm ml-1 shrink-0 whitespace-nowrap rounded-full px-4 text-base 2xl:text-lg">
             Đăng ký học thử
           </Link>
         </nav>
 
         {/* Mobile (không cần JS) */}
         <details className="group relative xl:hidden">
-          <summary className="btn-ghost btn-sm cursor-pointer list-none whitespace-nowrap rounded-full">☰ Menu</summary>
+          <summary className="btn-ghost btn-sm cursor-pointer list-none whitespace-nowrap rounded-full text-lg">☰ Menu</summary>
           <div className="absolute right-0 mt-3 flex w-72 flex-col gap-3 rounded-3xl border border-ink/5 bg-white p-5 shadow-[0_20px_50px_-20px_rgba(30,42,74,0.35)]">
             {NAV.map((n) => (
-              <ActiveNavLink key={n.href} href={n.href} className="whitespace-nowrap rounded-lg px-3 py-2 font-display font-bold">
+              <ActiveNavLink key={n.href} href={n.href} className="whitespace-nowrap rounded-lg px-3 py-2 font-display text-lg font-bold">
                 {n.label}
               </ActiveNavLink>
             ))}

@@ -14,6 +14,7 @@ import {
 } from "@/lib/site";
 import CourseCard from "@/components/CourseCard";
 import ProjectCard from "@/components/ProjectCard";
+import HomeHeroCarousel from "@/components/HomeHeroCarousel";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -65,32 +66,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative hero-visual-enter">
-            <div className="hero-media-frame aspect-video overflow-hidden rounded-[2rem] bg-ink shadow-[0_28px_70px_-30px_rgba(30,42,74,0.5)] ring-8 ring-white">
-              {SITE.heroVideoEmbed ? (
-                <iframe
-                  src={SITE.heroVideoEmbed}
-                  title="Video giới thiệu các game do học viên tự làm"
-                  className="h-full w-full"
-                  allow="accelerometer; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              ) : (
-                <div className="grid h-full grid-cols-3 gap-3 bg-gradient-to-br from-scratch-400 via-scratch-500 to-scratch-700 p-4 text-center text-white sm:gap-4 sm:p-6">
-                  {SAMPLE_SHOWCASE.slice(0, 6).map((s) => (
-                    <div key={s.title} className="showcase-tile grid place-items-center rounded-2xl border border-white/20 bg-white/15 backdrop-blur-sm">
-                      <div>
-                        <div className="text-3xl sm:text-5xl">{s.emoji}</div>
-                        <div className="mt-1 font-display text-xs font-bold sm:text-base">{s.title}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <p className="mt-3 text-center text-sm text-ink/60">Các game do học viên tự thiết kế</p>
-          </div>
+          <HomeHeroCarousel videoEmbed={SITE.heroVideoEmbed} />
         </div>
       </section>
 
@@ -149,7 +125,7 @@ export default async function HomePage() {
             <Link href="/san-pham" className="font-display font-bold text-scratch-600 hover:underline">Vào Showroom →</Link>
           </div>
           {projects.length > 0 ? (
-            <div className="stagger-children mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="stagger-children mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
               {projects.map((p) => (
                 <ProjectCard key={p.id} project={p} loggedIn={!!user} />
               ))}

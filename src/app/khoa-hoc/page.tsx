@@ -26,12 +26,6 @@ export default function CoursesPage() {
       </header>
 
       <section id="danh-sach-khoa-hoc" className="container-page scroll-mt-24 py-10 sm:py-14">
-        <div className="mb-8 max-w-2xl">
-          <h2 className="section-title">Chọn khóa học theo mục tiêu</h2>
-          <p className="mt-2 text-base text-ink/65 sm:text-lg">
-            Xem độ tuổi gợi ý, yêu cầu đầu vào và nội dung từng buổi trước khi đăng ký.
-          </p>
-        </div>
         <CourseExplorer courses={COURSES} />
       </section>
 

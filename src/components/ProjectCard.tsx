@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sendJson, formatDate } from "@/lib/client";
 import { scratchId, scratchEmbedUrl, scratchThumbUrl } from "@/lib/scratch";
 import type { CommentView, ProjectView } from "@/lib/types";
@@ -8,12 +8,50 @@ import type { CommentView, ProjectView } from "@/lib/types";
 export default function ProjectCard({ project, loggedIn }: { project: ProjectView; loggedIn: boolean }) {
   const [p, setP] = useState(project);
   const [playing, setPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<CommentView[] | null>(null);
   const [text, setText] = useState("");
   const [msg, setMsg] = useState("");
+  const playerRef = useRef<HTMLDivElement>(null);
 
   const id = scratchId(p.scratchUrl);
+
+  useEffect(() => {
+    function syncFullscreen() {
+      setIsFullscreen(document.fullscreenElement === playerRef.current);
+    }
+
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    return () => document.removeEventListener("fullscreenchange", syncFullscreen);
+  }, []);
+
+  async function toggleFullscreen() {
+    const player = playerRef.current;
+    if (!player) return;
+
+    try {
+      if (document.fullscreenElement === player) {
+        await document.exitFullscreen();
+      } else {
+        await player.requestFullscreen();
+      }
+    } catch {
+      setMsg("Không thể phóng to màn hình trên trình duyệt này.");
+    }
+  }
+
+  async function stopGame() {
+    const player = playerRef.current;
+    try {
+      if (player && document.fullscreenElement === player) {
+        await document.exitFullscreen();
+      }
+      setPlaying(false);
+    } catch {
+      setMsg("Không thể thoát chế độ toàn màn hình trên trình duyệt này.");
+    }
+  }
 
   function needLogin(): boolean {
     if (loggedIn) return false;
@@ -67,15 +105,52 @@ export default function ProjectCard({ project, loggedIn }: { project: ProjectVie
 
   return (
     <article className="card flex flex-col gap-3 !p-4">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-scratch-50">
+      <div
+        ref={playerRef}
+        className={`relative aspect-[4/3] overflow-hidden rounded-2xl bg-scratch-50 ${
+          isFullscreen ? "!h-screen !w-screen !aspect-auto !rounded-none bg-black" : ""
+        }`}
+      >
         {id && playing ? (
-          <iframe
-            src={scratchEmbedUrl(id)}
-            title={p.title}
-            className="absolute inset-0 h-full w-full"
-            allowFullScreen
-            loading="lazy"
-          />
+          <>
+            <iframe
+              src={scratchEmbedUrl(id)}
+              title={p.title}
+              className="absolute inset-0 h-full w-full"
+              allowFullScreen
+              loading="lazy"
+            />
+            <div className="absolute bottom-2 right-2 z-10 flex gap-1">
+              <button
+                type="button"
+                onClick={stopGame}
+                aria-label="Dừng trò chơi"
+                title="Dừng trò chơi"
+                className="grid h-10 w-10 place-items-center rounded-lg bg-black/70 text-white shadow-lg transition hover:bg-black focus-visible:ring-4 focus-visible:ring-white/70"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                  <rect x="5" y="5" width="14" height="14" rx="2" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                aria-label={isFullscreen ? "Thoát toàn màn hình" : "Phóng to toàn màn hình"}
+                title={isFullscreen ? "Thoát toàn màn hình" : "Phóng to toàn màn hình"}
+                className="grid h-10 w-10 place-items-center rounded-lg bg-black/70 text-white shadow-lg transition hover:bg-black focus-visible:ring-4 focus-visible:ring-white/70"
+              >
+                {isFullscreen ? (
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                    <path d="M8 3v5H3M16 3v5h5M8 21v-5H3m13 5v-5h5" />
+                  </svg>
+                ) : (
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                    <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </>
         ) : (
           <button
             type="button"
