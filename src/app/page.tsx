@@ -47,31 +47,49 @@ export default async function HomePage() {
         }}
       />
       {/* HERO */}
-      <section className="home-hero relative isolate overflow-hidden bg-gradient-to-br from-[#fff5e9] via-white to-[#eaf4ff]">
+      <section className="home-hero relative isolate overflow-hidden">
+        <div className="hero-grid" aria-hidden="true" />
         <div className="hero-orb hero-orb-one" aria-hidden="true" />
         <div className="hero-orb hero-orb-two" aria-hidden="true" />
-        <div className="container-page relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:gap-14 lg:py-24">
+        <div className="container-page hero-layout relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-14 lg:py-24">
           <div className="hero-copy-enter relative z-10">
-            <span className="chip rounded-full bg-white px-4 py-2 text-brand-700 shadow-soft ring-1 ring-brand-100">Dành cho bé 6-15 tuổi</span>
-            <h1 className="mt-5 max-w-2xl text-4xl sm:text-5xl lg:text-[4.25rem] lg:leading-[1.05]">
-              Học lập trình <span className="text-brand-500">Scratch</span>{" "}
-              <span className="text-scratch-500">cho trẻ em</span>
+            <span className="hero-eyebrow">
+              <span className="hero-eyebrow-dot" aria-hidden="true" />
+              STUDIO LẬP TRÌNH SÁNG TẠO · 6–15 TUỔI
+            </span>
+            <h1 className="hero-title mt-6 max-w-2xl">
+              Học <span className="hero-title-scratch">Scratch.</span>
+              <br />
+              Tạo nên thế giới
+              <br />
+              <span className="hero-title-accent">của riêng con.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-ink/75 sm:text-xl">
-              {SITE.slogan}. Bé học lập trình bằng cách tự tay làm ra những trò chơi của riêng mình, thay vì chỉ ngồi chơi game.
+            <p className="hero-description mt-6 max-w-xl text-lg leading-8 sm:text-xl">
+              {SITE.slogan}. Bé khám phá Scratch và Python bằng cách tự tay biến ý tưởng thành trò chơi, hoạt hình và dự án của riêng mình.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary rounded-full px-7 text-lg sm:text-xl">Đăng ký học thử <span aria-hidden="true">→</span></Link>
-              <Link href="/khoa-hoc" className="btn-ghost rounded-full border-white/80 bg-white/80 text-lg shadow-soft sm:text-xl">Khám phá khóa học</Link>
+              <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary hero-primary-cta rounded-full px-7 text-lg sm:text-xl">Đăng ký học thử <span aria-hidden="true">→</span></Link>
+              <Link href="/khoa-hoc" className="btn-ghost hero-secondary-cta rounded-full px-6 text-lg sm:text-xl">Khám phá khóa học</Link>
+            </div>
+            <div className="hero-learning-path mt-8" aria-label="Lộ trình học">
+              <span>Scratch</span>
+              <span className="hero-path-arrow" aria-hidden="true">↗</span>
+              <span>Dự án thật</span>
+              <span className="hero-path-arrow" aria-hidden="true">↗</span>
+              <span>Python</span>
             </div>
           </div>
 
           <HomeHeroCarousel videoEmbed={SITE.heroVideoEmbed} />
         </div>
+        <div className="container-page hero-bottomline">
+          <span>Ý TƯỞNG <i aria-hidden="true">/</i> MÃ LỆNH <i aria-hidden="true">/</i> TRÒ CHƠI</span>
+          <Link href="#value-props">Cuộn để khám phá <span aria-hidden="true">↓</span></Link>
+        </div>
       </section>
 
       {/* VALUE PROPS */}
-      <section className="container-page py-20 sm:py-24">
+      <section id="value-props" className="container-page py-20 sm:py-24">
         <h2 className="section-title text-center">Con nhận được gì?</h2>
         <div className="stagger-children mt-10 grid gap-6 md:grid-cols-3">
           {VALUE_PROPS.map((v) => (
@@ -160,14 +178,60 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* CTA */}
-      <section className="container-page pb-6">
-        <div className="rounded-[2rem] bg-gradient-to-r from-brand-500 to-brand-400 p-10 text-center text-white shadow-soft">
-          <h2 className="text-3xl sm:text-4xl">Cho bé thử một buổi học miễn phí?</h2>
-          <p className="mt-2 text-xl text-white/90">Đăng ký trong 1 phút, chúng tôi sẽ liên hệ phụ huynh.</p>
-          <Link href="/dang-ky-hoc?hoc-thu=1" className="btn mt-6 bg-white text-brand-700 shadow-pop hover:bg-brand-50 text-xl">
-            Đăng ký học thử
-          </Link>
+      {/* BUILD */}
+      <section className="build-section py-12 sm:py-20">
+        <div className="container-page">
+          <div className="build-panel">
+            <div className="build-copy">
+              <span className="build-eyebrow"><i aria-hidden="true" /> SCRATCHKIDS STUDIO · SẴN SÀNG SÁNG TẠO</span>
+              <h2 className="build-title">
+                Bắt đầu xây dựng
+                <span> thế giới của con.</span>
+              </h2>
+              <p>Ý tưởng đầu tiên có thể trở thành trò chơi mà con tự hào chia sẻ. Hãy bắt đầu bằng một buổi học thử miễn phí.</p>
+              <div className="build-actions">
+                <Link href="/dang-ky-hoc?hoc-thu=1" className="build-primary-link">
+                  Bắt đầu học thử <span aria-hidden="true">↗</span>
+                </Link>
+                <Link href="/khoa-hoc" className="build-secondary-link">Khám phá khóa học</Link>
+              </div>
+            </div>
+
+            <div className="build-scene" aria-hidden="true">
+              <span className="build-scene-orbit" />
+              <span className="build-scene-spark build-scene-spark-one">✦</span>
+              <span className="build-scene-spark build-scene-spark-two">✳</span>
+              <div className="build-token build-game-token" data-scroll-parallax="38">
+                <span className="build-token-icon">🎮</span>
+                <span className="build-token-label">DỰ ÁN 01</span>
+                <strong>Trò chơi đầu tiên</strong>
+                <small>Scratch · Lên cấp!</small>
+              </div>
+              <div className="build-token build-code-token" data-scroll-parallax="52">
+                <div className="build-code-header">
+                  <span><i /><i /><i /></span>
+                  <b>my_first_game</b>
+                  <span className="build-code-status">● ĐANG CHẠY</span>
+                </div>
+                <div className="build-code-lines">
+                  <span className="build-code-line is-gold"><i>01</i> khi bấm cờ xanh</span>
+                  <span className="build-code-line is-blue"><i>02</i> di chuyển 10 bước</span>
+                  <span className="build-code-line is-purple"><i>03</i> phát nhạc chiến thắng</span>
+                </div>
+              </div>
+              <div className="build-token build-python-token" data-scroll-parallax="30">
+                <span className="build-token-icon">🐍</span>
+                <strong>Lên cấp</strong>
+                <small>Tiếp theo: Python</small>
+                <span className="build-python-spark">✦</span>
+              </div>
+            </div>
+
+            <div className="build-footerline">
+              <span>Ý TƯỞNG <i>→</i> MÃ LỆNH <i>→</i> TRÒ CHƠI</span>
+              <span>Mỗi dự án là một thế giới mới.</span>
+            </div>
+          </div>
         </div>
       </section>
     </>

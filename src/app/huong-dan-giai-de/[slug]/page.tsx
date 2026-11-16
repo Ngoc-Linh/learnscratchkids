@@ -94,6 +94,7 @@ export default async function GuideArticlePage({ params }: Props) {
               height={620}
               unoptimized
               className="mt-4 w-full rounded-2xl bg-slate-950"
+              data-scroll-static
             />
           ) : (
             <p className="mt-3 text-ink/60">Bài viết chưa có hình minh họa.</p>

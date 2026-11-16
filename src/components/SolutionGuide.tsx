@@ -70,6 +70,7 @@ export default function SolutionGuide({ articles }: { articles: GuideArticle[] }
                     height={620}
                     unoptimized
                     className="aspect-[16/9] w-full bg-slate-950 object-cover"
+                    data-scroll-static
                   />
                 ) : (
                   <div className="flex aspect-[16/9] items-center justify-center bg-gradient-to-br from-indigo-950 to-scratch-800 text-6xl" aria-hidden="true">

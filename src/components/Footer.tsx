@@ -5,7 +5,7 @@ import ActiveNavLink from "./ActiveNavLink";
 
 export default function Footer() {
   return (
-    <footer className="mt-16 bg-ink text-white">
+    <footer className="bg-ink text-white">
       <div className="container-page grid gap-8 py-12 sm:grid-cols-3">
         <div>
           <div className="[&_span]:text-white">
