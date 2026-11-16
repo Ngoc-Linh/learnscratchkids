@@ -7,10 +7,7 @@ export function scratchId(url: string): string | null {
 
 export const scratchEmbedUrl = (id: string) => `https://scratch.mit.edu/projects/${id}/embed`;
 
-export const scratchThumbUrl = (id: string) =>
-  id === "1440102421"
-    ? "/images/featured-scratch-project.svg"
-    : `https://uploads.scratch.mit.edu/get_image/project/${id}_480x360.png`;
+export const scratchThumbUrl = (_id: string) => "/images/featured-scratch-project.svg";
 
 // Tháng hiện tại theo giờ Việt Nam, dạng "2026-10"
 export function monthKey(date: Date = new Date()): string {
