@@ -18,6 +18,12 @@ enum GuideCategory {
   EXAM
 }
 
+enum CourseTrack {
+  SCRATCH
+  PYTHON
+  INFORMATICS
+}
+
 model User {
   id           String       @id @default(uuid())
   phone        String?      @unique
@@ -35,6 +41,70 @@ model User {
   votes        Vote[]
   submissions  Submission[]
   redemptions  Redemption[]
+}
+
+model Student {
+  id         String        @id @default(uuid())
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  childName  String
+  parentName String
+  phone      String
+  age        Int
+  track      CourseTrack
+  status     String        @default("ACTIVE")
+  classId    String?
+  class      CourseClass?  @relation(fields: [classId], references: [id], onDelete: SetNull)
+  invoices   TuitionInvoice[]
+
+  @@index([childName])
+  @@index([phone])
+  @@index([track, status])
+  @@index([classId])
+}
+
+model CourseClass {
+  id        String      @id @default(uuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  name      String
+  track     CourseTrack
+  weekday   Int
+  startsAt  String
+  active    Boolean     @default(true)
+  students  Student[]
+
+  @@index([weekday, startsAt])
+  @@index([active])
+}
+
+model TuitionInvoice {
+  id          String           @id @default(uuid())
+  number      String           @unique
+  createdAt   DateTime         @default(now())
+  description String
+  amount      Int
+  dueDate     DateTime?
+  studentId   String
+  student     Student          @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  payments    TuitionPayment[]
+
+  @@index([createdAt])
+  @@index([studentId, createdAt])
+}
+
+model TuitionPayment {
+  id            String        @id @default(uuid())
+  receiptNumber String        @unique
+  receivedAt    DateTime      @default(now())
+  amount        Int
+  method        String
+  note          String?
+  invoiceId     String
+  invoice       TuitionInvoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+
+  @@index([receivedAt])
+  @@index([invoiceId, receivedAt])
 }
 
 model Enrollment {

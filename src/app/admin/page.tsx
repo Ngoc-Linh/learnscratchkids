@@ -11,6 +11,7 @@ import {
 import { formatDate } from "@/lib/client";
 import { AccountManager, CreateAccountForm, EnrollmentStatus, ReviewForm } from "@/components/AdminPanel";
 import AdminGuideArticles from "@/components/AdminGuideArticles";
+import ManagementDashboard from "@/components/ManagementDashboard";
 
 export const metadata: Metadata = { title: "Quản trị", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -66,6 +67,10 @@ export default async function AdminPage() {
         </div>
         <nav aria-label="Điều hướng bảng quản trị" className="relative mt-8 flex gap-2 overflow-x-auto whitespace-nowrap pb-2">
           {[
+            ["#financial-dashboard", "Tài chính"],
+            ["#student-list", "Học viên"],
+            ["#class-schedule", "Lịch lớp"],
+            ["#tuition-invoices", "Phiếu thu"],
             ["#tong-quan", "Tổng quan"],
             ["#tai-khoan", "Tài khoản"],
             ["#bai-huong-dan", "Bài hướng dẫn"],
@@ -79,6 +84,8 @@ export default async function AdminPage() {
           ))}
         </nav>
       </header>
+
+      <ManagementDashboard />
 
       <section id="tong-quan" className="grid scroll-mt-28 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="card relative overflow-hidden border-l-4 border-l-scratch-400 !p-5">

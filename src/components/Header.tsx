@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { getUser } from "@/lib/auth";
 import { SITE } from "@/lib/site";
@@ -10,21 +11,18 @@ const NAV = [
   { href: "/san-pham", label: "Sản phẩm" },
 ];
 
-export function Logo() {
+type HeaderUser = Awaited<ReturnType<typeof getUser>>;
+
+function AccountLinks({ user }: { user: HeaderUser }) {
+  if (!user) {
+    return (
+      <Link href="/dang-nhap" className="btn-ghost btn-sm whitespace-nowrap rounded-full">
+        Đăng nhập
+      </Link>
+    );
+  }
+
   return (
-    <span className="group/logo flex items-center gap-2.5 font-display text-2xl font-extrabold">
-      <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-500 text-xl text-white shadow-pop transition-transform duration-300 group-hover/logo:-rotate-6 group-hover/logo:scale-105">S</span>
-      <span>
-        Scratch<span className="text-scratch-500">Kids</span>
-      </span>
-    </span>
-  );
-}
-
-export default async function Header() {
-  const user = await getUser();
-
-  const account = user ? (
     <>
       <ActiveNavLink href="/tai-khoan" className="rounded-lg px-2 py-1 font-display font-bold">
         {user.name.split(" ").slice(-1)[0]} · ⭐ {user.stars}
@@ -36,12 +34,30 @@ export default async function Header() {
       )}
       <LogoutButton />
     </>
-  ) : (
-    <Link href="/dang-nhap" className="btn-ghost btn-sm whitespace-nowrap rounded-full">
-      Đăng nhập
-    </Link>
   );
+}
 
+async function HeaderAccount({ user }: { user: Promise<HeaderUser> }) {
+  return <AccountLinks user={await user} />;
+}
+
+function AccountFallback() {
+  return <span aria-hidden="true" className="inline-block h-9 w-20 animate-pulse rounded-full bg-ink/5" />;
+}
+
+export function Logo() {
+  return (
+    <span className="group/logo flex items-center gap-2.5 font-display text-2xl font-extrabold">
+      <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-500 text-xl text-white shadow-pop transition-transform duration-300 group-hover/logo:-rotate-6 group-hover/logo:scale-105">S</span>
+      <span>
+        Scratch<span className="text-scratch-500">Kids</span>
+      </span>
+    </span>
+  );
+}
+
+export default function Header() {
+  const user = getUser();
   return (
     <header className="site-header sticky top-0 z-40 border-b border-ink/5 bg-white/90 backdrop-blur-xl">
       <div className="container-page flex min-h-[76px] items-center justify-between gap-3 py-3">
@@ -60,7 +76,9 @@ export default async function Header() {
           </div>
           <span className="mx-2 h-7 w-px shrink-0 bg-ink/10" />
           <div className="flex shrink-0 items-center gap-2 whitespace-nowrap">
-            {account}
+            <Suspense fallback={<AccountFallback />}>
+              <HeaderAccount user={user} />
+            </Suspense>
           </div>
           <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary btn-sm ml-1 shrink-0 whitespace-nowrap rounded-full px-4 text-base 2xl:text-lg">
             Đăng ký học thử
@@ -77,7 +95,11 @@ export default async function Header() {
               </ActiveNavLink>
             ))}
             <hr className="border-ink/10" />
-            <div className="flex flex-col gap-3">{account}</div>
+            <div className="flex flex-col gap-3">
+              <Suspense fallback={<AccountFallback />}>
+                <HeaderAccount user={user} />
+              </Suspense>
+            </div>
             <Link href="/dang-ky-hoc?hoc-thu=1" className="btn-primary btn-sm whitespace-nowrap">
               Đăng ký học thử
             </Link>

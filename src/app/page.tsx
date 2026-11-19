@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { getUser } from "@/lib/auth";
 import { isDatabaseConfigured, safe } from "@/lib/db";
@@ -9,7 +10,6 @@ import {
   SAMPLE_SHOWCASE,
   SITE,
   TESTIMONIALS,
-  TESTIMONIALS_ARE_SAMPLE,
   VALUE_PROPS,
 } from "@/lib/site";
 import CourseCard from "@/components/CourseCard";
@@ -24,12 +24,48 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export default async function HomePage() {
+type HomeProjects = Awaited<ReturnType<typeof listProjects>>;
+
+function ShowcaseSection({ projects, loggedIn }: { projects: HomeProjects; loggedIn: boolean }) {
+  return (
+    <section className="showcase-section bg-scratch-50 py-20 sm:py-24">
+      <div className="container-page">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <h2 className="section-title">Sản phẩm của học viên</h2>
+          <Link href="/san-pham" className="font-display font-bold text-scratch-600 hover:underline">Vào Showroom →</Link>
+        </div>
+        {projects.length > 0 ? (
+          <div className="stagger-children mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+            {projects.map((p) => (
+              <ProjectCard key={p.id} project={p} loggedIn={loggedIn} />
+            ))}
+          </div>
+        ) : (
+          <div className="stagger-children mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {SAMPLE_SHOWCASE.map((s) => (
+              <div key={s.title} className="card text-center !p-4">
+                <div className="text-5xl">{s.emoji}</div>
+                <h3 className="mt-2 text-lg">{s.title}</h3>
+                <span className="chip mt-1 bg-scratch-100 text-scratch-700">{s.tag}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+async function ShowcaseProjects() {
   const user = await getUser();
   const projects = isDatabaseConfigured()
     ? await safe(() => listProjects({ userId: user?.id, take: 6 }), [])
     : [];
 
+  return <ShowcaseSection projects={projects} loggedIn={!!user} />;
+}
+
+export default function HomePage() {
   return (
     <>
       <script
@@ -136,31 +172,9 @@ export default async function HomePage() {
       </section>
 
       {/* SHOWCASE */}
-      <section className="showcase-section bg-scratch-50 py-20 sm:py-24">
-        <div className="container-page">
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <h2 className="section-title">Sản phẩm của học viên</h2>
-            <Link href="/san-pham" className="font-display font-bold text-scratch-600 hover:underline">Vào Showroom →</Link>
-          </div>
-          {projects.length > 0 ? (
-            <div className="stagger-children mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-              {projects.map((p) => (
-                <ProjectCard key={p.id} project={p} loggedIn={!!user} />
-              ))}
-            </div>
-          ) : (
-            <div className="stagger-children mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-              {SAMPLE_SHOWCASE.map((s) => (
-                <div key={s.title} className="card text-center !p-4">
-                  <div className="text-5xl">{s.emoji}</div>
-                  <h3 className="mt-2 text-lg">{s.title}</h3>
-                  <span className="chip mt-1 bg-scratch-100 text-scratch-700">{s.tag}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      <Suspense fallback={<ShowcaseSection projects={[]} loggedIn={false} />}>
+        <ShowcaseProjects />
+      </Suspense>
 
       {/* TESTIMONIALS */}
       {TESTIMONIALS.length > 0 && (

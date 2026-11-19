@@ -49,7 +49,7 @@ export default function ScrollEffects() {
       main.querySelectorAll<HTMLElement>(".home-hero").forEach((element) => motionObserver?.observe(element));
 
       const observeContent = () => {
-        main.querySelectorAll<HTMLElement>("section:not(.build-section), article.card, .stagger-children > *, .build-copy, .build-token").forEach((element, index) => {
+        main.querySelectorAll<HTMLElement>("article.card, .stagger-children > *, .build-copy, .build-token").forEach((element, index) => {
           if (element.hasAttribute("data-reveal")) return;
           const isVisible = element.getBoundingClientRect().top < window.innerHeight * 0.9;
           element.setAttribute("data-reveal", isVisible ? "visible" : "hidden");

@@ -68,11 +68,9 @@
 
 @keyframes route-enter {
   from {
-    opacity: 0;
     transform: translate3d(0, 10px, 0);
   }
   to {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -1540,6 +1538,152 @@
   clip-path: inset(0 round 0);
   opacity: 1;
   scale: 1;
+}
+
+.management-bars {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  gap: 0.75rem;
+  height: 13rem;
+  border-bottom: 1px solid rgba(30, 42, 74, 0.12);
+}
+
+.management-bar-month {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  color: rgba(30, 42, 74, 0.65);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.management-bar-pair {
+  display: flex;
+  width: min(100%, 3.25rem);
+  height: calc(100% - 1.5rem);
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.management-bar {
+  width: 42%;
+  min-height: 0.15rem;
+  border-radius: 0.45rem 0.45rem 0 0;
+  transition: height 350ms ease-out;
+}
+
+.management-bar-invoiced {
+  background: #fb923c;
+}
+
+.management-bar-collected {
+  background: #10b981;
+}
+
+.management-donut {
+  display: grid;
+  width: 9rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.management-donut > span {
+  display: grid;
+  width: 66%;
+  aspect-ratio: 1;
+  align-content: center;
+  justify-items: center;
+  border-radius: 50%;
+  background: white;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.management-donut small {
+  color: rgba(30, 42, 74, 0.55);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.management-modal {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: max(1rem, 5vh) 1rem;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.management-modal-panel {
+  width: min(100%, 42rem);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 24px 80px -24px rgba(15, 23, 42, 0.5);
+}
+
+@media (max-width: 640px) {
+  .management-bars {
+    gap: 0.35rem;
+  }
+
+  .management-bar-pair {
+    width: 100%;
+  }
+
+  .management-modal-panel {
+    padding: 1rem;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .management-modal:not(.receipt-modal) {
+    display: none !important;
+  }
+
+  .receipt-modal,
+  .receipt-modal * {
+    visibility: visible !important;
+  }
+
+  .receipt-modal {
+    position: static;
+    display: block;
+    overflow: visible;
+    padding: 0;
+    background: white;
+  }
+
+  .receipt-modal .management-modal-panel {
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .receipt-modal .no-print {
+    display: none !important;
+  }
 }
 
 a,
