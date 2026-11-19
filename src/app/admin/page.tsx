@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -12,6 +13,7 @@ import { formatDate } from "@/lib/client";
 import { AccountManager, CreateAccountForm, EnrollmentStatus, ReviewForm } from "@/components/AdminPanel";
 import AdminGuideArticles from "@/components/AdminGuideArticles";
 import ManagementDashboard from "@/components/ManagementDashboard";
+import LogoutButton from "@/components/LogoutButton";
 
 export const metadata: Metadata = { title: "Quản trị", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -48,44 +50,70 @@ export default async function AdminPage() {
   const pendingEnrollments = enrollments.filter((enrollment) => enrollment.status === "NEW").length;
 
   return (
-    <div className="container-page space-y-10 py-8 sm:py-12">
-      <header className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-7 text-white shadow-soft sm:p-10">
-        <div className="pointer-events-none absolute -right-10 -top-20 h-72 w-72 rounded-full bg-scratch-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 left-1/3 h-64 w-64 rounded-full bg-brand-400/20 blur-3xl" />
-        <div className="relative flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <span className="chip border border-white/15 bg-white/10 text-white">SCRATCHKIDS · ADMIN</span>
-            <h1 className="mt-4 text-4xl sm:text-5xl">Bảng điều khiển</h1>
-            <p className="mt-2 max-w-2xl text-base text-white/70 sm:text-lg">
-              Xin chào {user.name}. Theo dõi học viên, đăng ký học thử và hoạt động học tập tại một nơi.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/10 px-5 py-3 backdrop-blur">
-            <p className="text-sm text-white/65">Ngày hôm nay</p>
-            <p className="font-display text-xl font-bold">{formatDate(new Date().toISOString())}</p>
-          </div>
-        </div>
-        <nav aria-label="Điều hướng bảng quản trị" className="relative mt-8 flex gap-2 overflow-x-auto whitespace-nowrap pb-2">
+    <div className="admin-dashboard-shell">
+      <aside className="admin-sidebar">
+        <Link href="/admin" className="admin-brand">
+          <span className="admin-brand-mark">S</span>
+          <span>Scratch<span className="admin-brand-accent">Kids</span><small>ADMIN CONSOLE</small></span>
+        </Link>
+        <p className="admin-nav-caption">QUẢN LÝ TRUNG TÂM</p>
+        <nav aria-label="Quản lý trung tâm" className="admin-sidebar-nav">
           {[
-            ["#financial-dashboard", "Tài chính"],
-            ["#student-list", "Học viên"],
-            ["#class-schedule", "Lịch lớp"],
-            ["#tuition-invoices", "Phiếu thu"],
-            ["#tong-quan", "Tổng quan"],
-            ["#tai-khoan", "Tài khoản"],
-            ["#bai-huong-dan", "Bài hướng dẫn"],
-            ["#dang-ky-hoc", "Đăng ký học"],
-            ["#bai-nop", "Bài nộp"],
-            ["#doi-qua", "Đổi quà"],
-          ].map(([href, label]) => (
-            <a key={href} href={href} className="shrink-0 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-bold text-white/85 transition hover:bg-white/15">
-              {label}
+            ["#financial-dashboard", "Tổng quan tài chính", "▦"],
+            ["#student-list", "Học viên", "♙"],
+            ["#class-schedule", "Lớp & lịch học", "▤"],
+            ["#tuition-invoices", "Phiếu thu", "▧"],
+          ].map(([href, label, icon]) => (
+            <a key={href} href={href} className="admin-sidebar-link">
+              <span aria-hidden="true" className="admin-sidebar-icon">{icon}</span>{label}
             </a>
           ))}
         </nav>
-      </header>
+        <p className="admin-nav-caption">HỆ THỐNG</p>
+        <nav aria-label="Công cụ quản trị" className="admin-sidebar-nav">
+          {[
+            ["#tong-quan", "Tổng quan đăng ký", "◷"],
+            ["#tai-khoan", "Tài khoản", "♙"],
+            ["#bai-huong-dan", "Bài hướng dẫn", "▤"],
+            ["#dang-ky-hoc", "Đăng ký học", "＋"],
+            ["#bai-nop", "Bài nộp", "⌁"],
+            ["#doi-qua", "Đổi quà", "☆"],
+          ].map(([href, label, icon]) => (
+            <a key={href} href={href} className="admin-sidebar-link">
+              <span aria-hidden="true" className="admin-sidebar-icon">{icon}</span>{label}
+            </a>
+          ))}
+        </nav>
+        <div className="admin-sidebar-profile">
+          <span className="admin-profile-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
+          <span><b>{user.name}</b><small>Quản trị viên</small></span>
+        </div>
+      </aside>
 
-      <ManagementDashboard />
+      <div className="admin-main-area">
+        <header className="admin-topbar">
+          <div>
+            <p className="admin-breadcrumb">ScratchKids <span>/</span> Quản trị</p>
+            <h1>Bảng điều khiển</h1>
+          </div>
+          <div className="admin-topbar-user">
+            <span className="admin-profile-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
+            <span className="admin-topbar-name">{user.name}</span>
+            <LogoutButton />
+          </div>
+        </header>
+
+        <div className="admin-content space-y-10">
+          <div className="admin-page-intro">
+            <div>
+              <p className="admin-page-kicker">TỔNG QUAN</p>
+              <h2>Chào {user.name}, đây là tình hình hôm nay</h2>
+              <p>Theo dõi tài chính, học viên và lịch học tại một nơi.</p>
+            </div>
+            <div className="admin-date-card"><span>HÔM NAY</span><b>{formatDate(new Date().toISOString())}</b></div>
+          </div>
+
+          <ManagementDashboard />
 
       <section id="tong-quan" className="grid scroll-mt-28 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="card relative overflow-hidden border-l-4 border-l-scratch-400 !p-5">
@@ -254,6 +282,8 @@ export default async function AdminPage() {
           )}
         </div>
       </section>
+        </div>
+      </div>
     </div>
   );
 }
